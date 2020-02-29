@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Table from '../components/Table';
+import { Container } from '../components/Grid';
 import { setLoading } from '../actions/loading';
 
 import { getConditionsById } from '../api';
@@ -33,7 +34,7 @@ function PatientInfo(props) {
   }, [dispatch, patient_id]);
 
   return (
-    <div>
+    <Container>
       <h1>Conditions for {patient.name}</h1>
       {loading ? (
         <h1>Loading...</h1>
@@ -71,7 +72,7 @@ function PatientInfo(props) {
       ) : (
         <h1>No Information found</h1>
       )}
-    </div>
+    </Container>
   );
 }
 

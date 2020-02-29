@@ -49,7 +49,7 @@ export default function SearchPage() {
         </form>
       </Row>
 
-      <Row justify="flex-start" canWrap>
+      <Row style={{ marginTop: '48px' }} justify="flex-start" canWrap>
         {loading ? (
           <h1>Loading...</h1>
         ) : results.length > 0 ? (
