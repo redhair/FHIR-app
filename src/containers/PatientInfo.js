@@ -10,7 +10,7 @@ import { getConditionsById } from '../api';
 function PatientInfo(props) {
   const dispatch = useDispatch();
   const patient = useSelector(state => state.patient);
-  const loading = useSelector(state => state.loading);
+  const loading = useSelector(state => state.loading.loading);
   const { patient_id } = useParams();
   const [conditions, setConditions] = useState([]);
 

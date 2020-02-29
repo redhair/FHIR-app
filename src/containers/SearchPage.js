@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setResults, setQuery } from '../actions/search';
-import { setLoading } from '../actions/loading';
+import { setLoading, setInit } from '../actions/loading';
 import Patient from '../components/Patient';
 import Button from '../components/Button';
 import Input from '../components/Input';
@@ -11,22 +11,26 @@ import { getPatientByName } from '../api';
 
 export default function SearchPage() {
   const dispatch = useDispatch();
-  const loading = useSelector(state => state.loading);
+  const init = useSelector(state => state.loading.init);
+  const loading = useSelector(state => state.loading.loading);
   const results = useSelector(state => state.search.results);
   const query = useSelector(state => state.search.query);
-  const [name, setName] = useState('');
+  const [name, setName] = useState(query || '');
 
   function handleSearch(e) {
     e.preventDefault();
+    if (!init) dispatch(setInit(true));
     dispatch(setLoading(true));
     dispatch(setQuery(name));
     getPatientByName(name)
       .then(res => {
         dispatch(
           setResults(
-            res.data.entry.map(entry => {
-              return { ...entry.resource, name: entry.resource.name[0].given.join(' ') };
-            })
+            res.data.entry
+              ? res.data.entry.map(entry => {
+                  return { ...entry.resource, name: entry.resource.name[0].given.join(' ') };
+                })
+              : []
           )
         );
         dispatch(setLoading(false));
@@ -50,7 +54,9 @@ export default function SearchPage() {
       </Row>
 
       <Row style={{ marginTop: '48px' }} justify="flex-start" canWrap>
-        {loading ? (
+        {!init ? (
+          <h1>Please enter a name to search.</h1>
+        ) : loading ? (
           <h1>Loading...</h1>
         ) : results.length > 0 ? (
           results.map((result, i) => {
