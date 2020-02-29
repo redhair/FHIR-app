@@ -9,6 +9,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { PersistGate } from 'redux-persist/integration/react';
 import thunk from 'redux-thunk';
+import './index.css';
 
 const logger = store => next => action => {
   console.group(action.type);

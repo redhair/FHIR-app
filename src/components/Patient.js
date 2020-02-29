@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setActivePatient } from '../actions/patient';
+import Button from './Button';
 import PropTypes from 'prop-types';
 
 const Wrapper = styled.div`
@@ -10,9 +11,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   background: white;
   padding: 16px;
-  margin: 16px;
+  box-sizing: border-box;
+  margin: 16px 0;
   border-radius: 8px;
-  width: 50%;
+  width: 100%;
   box-shadow: 0px 13px 38px -15px rgba(24, 38, 107, 0.49);
 `;
 
@@ -32,17 +34,23 @@ export default function Patient({ patient }) {
 
   return (
     <Wrapper>
-      <p>Name: {name}</p>
-      <p>DOB: {birthDate}</p>
-      <p>Gender: {gender}</p>
-      <button
+      <p>
+        <b>Name:</b> {name}
+      </p>
+      <p>
+        <b>DOB:</b> {birthDate}
+      </p>
+      <p>
+        <b>Gender:</b> {gender}
+      </p>
+      <Button
         onClick={() => {
           dispatch(setActivePatient(patient));
           history.push(`/patient/${id}`);
         }}
       >
         See Conditions
-      </button>
+      </Button>
     </Wrapper>
   );
 }
